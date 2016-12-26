@@ -1,29 +1,22 @@
----
 language: ruby
 rvm:
-  - 2.2
-  - 2.1
-  - 2.0
-  - 1.9.3
-
-# Use the new container infrastructure
+- 2.2
+- 2.1
+- 2.0
+- 1.9.3
 sudo: false
-
 services:
-  - docker
-
+- docker
 script:
-  # Cannot test on Fedora 20 due to
-  # https://fedorahosted.org/spin-kickstarts/ticket/55
-  - >
-    wget -O- bit.ly/ansibletest | env
-    DOCKER_IMAGES="debian:7 debian:8 ubuntu:14.04
-    ubuntu:16.04 fedora:21 fedora:24"
-    ANSIBLE_VERSIONS="1.4.4 1.6.1 1.8.4 2.0.0.2 2.1.0.0"
-    sh -x
-
+- >
+  wget -O- bit.ly/ansibletest | env
+  DOCKER_IMAGES="debian:7 debian:8 ubuntu:14.04 ubuntu:16.04 fedora:21
+  fedora:24"
+  ANSIBLE_VERSIONS="1.4.4 1.6.1 1.8.4 2.0.0.2 2.1.0.0"
+  sh -x
 after_failure:
-  - cat role-tester-ansible-master/.kitchen/logs/*.log | grep -v '^I, '
-
+- cat role-tester-ansible-master/.kitchen/logs/*.log | grep -v '^I, '
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  slack:
+    secure: XB4sZIzZp/TkQERkftmTbVELcdV6m06xQd+IQ1iSWANT5g/BhOi6U7H5WuDSmGVUuYFYP+D+s1b+s2UEm1FxQhhXDx3MgjEHqQ831D2DhuHuDV1PCWymjqB0KuChK1Y46x29y5RwJPhgdqzW2MuoqgfzzELfIJyq+Vl2YBV1bcMrHAdoZZB1RljUJLsdAueWIHg3gWaU/SAhfepdv1KJA8sDStQFR+8UTokFYCXs4ckl45gYoq8cYn0LKb8qfzvWUOEq2PGCakTqHpAak81M0SbjUYZwkSvMTgH1CJUyHgh7QXtsfEml+KHFpElrIjRYpLbOqk8tSIuTZpjkvUHVfaZ710W2alugCcNz/Gu+bmiVcSz8bQ1G0gHoJoxA8GYMdMTVlzjtGyXfRVCB0jOY6jQ8sLr6JTdDAT82i/BG8MFUJgRzXP6gnIRFoHhEz+VLeX1lOS7mkLzxrVvVihMH/nKLXIXHCTrWAVwrCCbh/3C4RwMV4+T5ycuf/sbAGoHJKpUJ+bRmsuXalVwTjb8AHJL/h7/q/h+IYqQ7D9EEpqnQcAKRMgqg04VhAgEsqJXSar39zl4nxLBjSy5jZszjHR2ip9A+dlNDg67NQY3k11q/JoEjHDZHLkuwAHjyVQihtPTGHxF6qgVZZIayNNs664dMnYfWw0Z9eUdFYVg4hfU=
